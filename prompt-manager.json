@@ -1,11 +1,6 @@
 {
   "prompts": [
     {
-      "file": "environment.md",
-      "title": "机器环境",
-      "order": 5
-    },
-    {
       "file": "contract.md",
       "title": "CTF 契约",
       "order": 10

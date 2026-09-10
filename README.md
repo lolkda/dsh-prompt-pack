@@ -2,32 +2,14 @@
 
 一个可以被 [dsh-prompt-manager](https://github.com/lolkda/dsh-prompt-manager) 订阅的 DeepSeek Harness（DSH）提示词包。仓库里放的是 **system prompt section** 的 markdown 正文，订阅方检查更新、按文件挑选、再应用到自己机器上。
 
-当前包含三条：
+当前包含两条：
 
 | 文件 | 标题 | 默认顺序 | 内容 |
 |---|---|---|---|
-| `environment.md` | 机器环境 | 5 | 本机系统与 shell / 工具链版本，值全部由 `{{…}}` 变量填充（需要订阅方先配好探测，见下） |
 | `contract.md` | CTF 契约 | 10 | CTF / 竞赛沙箱作业契约：核心约定、证据优先级、工作流、工具与结果呈现、协作与网络语境 |
 | `fastctx.md` | FastCtx 工具路由 | 20 | 优先使用 `mcp__fastctx__*`（inspect_local_file / grep / glob / replace / run）而不是 shell 等价物的工具路由指引 |
 
-## 机器环境这条要先配探测
-
-`environment.md` 是**三端通用**的：它不写死任何一台机器的事实，只引用变量，值由**订阅方自己的机器**在插件挂载时探测填充（`{{os}}` / `{{os_release}}` / `{{platform}}` / `{{arch}}` + 探测出来的 `{{bash}}` / `{{pwsh}}` / `{{git}}` / `{{node}}` / `{{python}}`）。所以订阅后请在 profile 的 `cordis.patch.yml` 里补上这一段：
-
-```yaml
-      config:
-        environment: true
-        probes:
-          pwsh:   { command: pwsh, args: ['-NoProfile', '-Command', '$PSVersionTable.PSVersion.ToString()'] }
-          bash:   { command: bash, args: ['--version'], pattern: 'version ([0-9.]+)' }
-          git:    { command: git,  args: ['--version'], pattern: '([0-9]+\.[0-9]+\.[0-9]+)' }
-          node:   { command: node, args: ['--version'], pattern: 'v?([0-9.]+)' }
-          python: { command: python, args: ['--version'], pattern: '([0-9.]+)' }
-```
-
-两个平台细节：不在 `PATH` 上的工具要写绝对路径（Windows 上宿主进程的 `PATH` 往往只有 `Git\cmd`，没有 `bash.exe`）；`npm` / `pnpm` 这类 `.cmd` 垫片要加 `shell: true`。
-
-**不配会怎样**：变量没注册时，正文里那个 `{{名字}}` 会让 `assemble()` 直接抛错（整个 system prompt 组不出来），而不是渲染成空串。所以要么把探测配齐，要么把这条条目的开关关掉。
+机器环境那条**不在这里**：它作为 `dsh-prompt-manager` 的内置条目随插件发布（正文与变量由插件自带，开箱即用），不再需要订阅。这个包只放按部署定制的正文。
 
 ## 订阅方式
 
@@ -60,7 +42,6 @@ prompt-manager:
 ```json
 {
   "prompts": [
-    { "file": "environment.md", "title": "机器环境", "order": 5 },
     { "file": "contract.md", "title": "CTF 契约", "order": 10 },
     { "file": "fastctx.md", "title": "FastCtx 工具路由", "order": 20 }
   ]
@@ -78,7 +59,7 @@ prompt-manager:
 
 ## 来源
 
-这三份正文最初是 `dsh-prompt-manager` 插件自带的种子提示词（机器环境那条后来改成了变量驱动的通用版），现在独立成一个可订阅的包，方便在多台机器、多个 profile 之间同步同一份契约。
+这两份正文最初是 `dsh-prompt-manager` 插件自带的种子提示词，现在独立成一个可订阅的包，方便在多台机器、多个 profile 之间同步同一份契约。机器环境那条已改由插件内置发布（值在挂载时探测），见插件的 README。
 
 ## License
 
