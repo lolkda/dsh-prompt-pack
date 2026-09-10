@@ -1,0 +1,14 @@
+{
+  "prompts": [
+    {
+      "file": "contract.md",
+      "title": "CTF 契约",
+      "order": 10
+    },
+    {
+      "file": "fastctx.md",
+      "title": "FastCtx 工具路由",
+      "order": 20
+    }
+  ]
+}
