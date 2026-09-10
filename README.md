@@ -1,6 +1,6 @@
 # dsh-prompt-pack
 
-一个可以被 [dsh-prompt-manager](https://github.com/lolkda/dsh-ctf-prompt) 订阅的 DeepSeek Harness（DSH）提示词包。仓库里放的是 **system prompt section** 的 markdown 正文，订阅方检查更新、按文件挑选、再应用到自己机器上。
+一个可以被 [dsh-prompt-manager](https://github.com/lolkda/dsh-prompt-manager) 订阅的 DeepSeek Harness（DSH）提示词包。仓库里放的是 **system prompt section** 的 markdown 正文，订阅方检查更新、按文件挑选、再应用到自己机器上。
 
 当前包含三条：
 
