@@ -2,12 +2,13 @@
 
 一个可以被 [dsh-prompt-manager](https://github.com/lolkda/dsh-prompt-manager) 订阅的 DeepSeek Harness（DSH）提示词包。仓库里放的是 **system prompt section** 的 markdown 正文，订阅方检查更新、按文件挑选、再应用到自己机器上。
 
-当前包含两条：
+当前包含三条：
 
 | 文件 | 标题 | 默认顺序 | 内容 |
 |---|---|---|---|
-| `contract.md` | CTF 契约 | 10 | CTF / 竞赛沙箱作业契约：核心约定、证据优先级、工作流、工具与结果呈现、协作与网络语境 |
 | `fastctx.md` | FastCtx 工具路由 | 20 | 优先使用 `mcp__fastctx__*`（inspect_local_file / grep / glob / replace / run）而不是 shell 等价物的工具路由指引 |
+| `ctf.md` | CTF 沙箱契约 | 30 | CTF / 竞赛沙箱作业契约：核心约定、证据优先级、工作流、工具、协作与网络语境 |
+| `engineering.md` | 工程判断 | 40 | 破坏性改动什么时候该作为推荐方案，而不是默认发兼容补丁 |
 
 机器环境那条**不在这里**：它作为 `dsh-prompt-manager` 的内置条目随插件发布（正文与变量由插件自带，开箱即用），不再需要订阅。这个包只放按部署定制的正文。
 
@@ -42,8 +43,9 @@ prompt-manager:
 ```json
 {
   "prompts": [
-    { "file": "contract.md", "title": "CTF 契约", "order": 10 },
-    { "file": "fastctx.md", "title": "FastCtx 工具路由", "order": 20 }
+    { "file": "fastctx.md", "title": "FastCtx 工具路由", "order": 20 },
+    { "file": "ctf.md", "title": "CTF 沙箱契约", "order": 30 },
+    { "file": "engineering.md", "title": "工程判断", "order": 40 }
   ]
 }
 ```
@@ -59,7 +61,11 @@ prompt-manager:
 
 ## 来源
 
-这两份正文最初是 `dsh-prompt-manager` 插件自带的种子提示词，现在独立成一个可订阅的包，方便在多台机器、多个 profile 之间同步同一份契约。机器环境那条已改由插件内置发布（值在挂载时探测），见插件的 README。
+这三份正文最初都来自 `dsh-prompt-manager` 插件的种子提示词，现在独立成一个可订阅的包，方便在多台机器、多个 profile 之间同步同一份契约。机器环境那条已改由插件内置发布（值在挂载时探测），见插件的 README。
+
+原先仓库里只有一份 `contract.md`，里面拼着三件不相干的东西（种子的历史遗留）：通用输出规范、CTF 沙箱契约、工程判断。现已按用途拆开：CTF 的七节移进 `ctf.md`，`Engineering Judgment` 独立成 `engineering.md`，`contract.md` 随之删除 —— 其中排版规则和最终答复风格那两节不再保留（要找回看 git 历史里的 `contract.md`），与 CTF 无关的 `Presenting Results` 一节也一并删去。
+
+顺序号保留原值（`fastctx` 20 / `ctf` 30 / `engineering` 40），空出来的 10 是删掉的 `contract.md`：这样订阅方那边其余条目的相对顺序不变。订阅方「检查更新」时会看到 `contract.md` 条目消失、`ctf.md` 与 `engineering.md` 出现，属预期。
 
 ## License
 

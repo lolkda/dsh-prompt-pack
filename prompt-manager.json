@@ -1,14 +1,19 @@
 {
   "prompts": [
     {
-      "file": "contract.md",
-      "title": "CTF 契约",
-      "order": 10
-    },
-    {
       "file": "fastctx.md",
       "title": "FastCtx 工具路由",
       "order": 20
+    },
+    {
+      "file": "ctf.md",
+      "title": "CTF 沙箱契约",
+      "order": 30
+    },
+    {
+      "file": "engineering.md",
+      "title": "工程判断",
+      "order": 40
     }
   ]
 }
