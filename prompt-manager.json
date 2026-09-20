@@ -14,6 +14,11 @@
       "file": "engineering.md",
       "title": "工程判断",
       "order": 40
+    },
+    {
+      "file": "tdd-non-gpt-claude.md",
+      "title": "TDD Skill Guidance (Except GPT / Claude)",
+      "order": 50
     }
   ]
 }
